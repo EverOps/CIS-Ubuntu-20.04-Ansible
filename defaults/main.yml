@@ -71,7 +71,7 @@ remove_FTPServer: yes
 remove_IMAPandPOP3server: yes
 remove_Samba: yes
 remove_HTTPProxyServer: yes
-remove_SNMPServer: yes
+remove_SNMPServer: no
 remove_rsyncservice: yes
 remove_NISServer: yes
 remove_NISClient: yes
