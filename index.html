@@ -1,9 +1,9 @@
-<div align="center">
-  <img src="https://raw.githubusercontent.com/alivx/CIS-Ubuntu-20.04-Ansible/master/files/header.png">
-</div>
+## Welcome to GitHub Pages
+
+You can use the [editor on GitHub](https://github.com/alivx/CIS-Ubuntu-20.04-Ansible/edit/gh-pages/index.md) 
 
 
-Ansible CIS Ubuntu 20.04 LTS Hardening V1.1.0 Latest [![Build Status](https://travis-ci.com/alivx/CIS-Ubuntu-20.04-Ansible.svg?branch=master)](https://travis-ci.com/alivx/CIS-Ubuntu-20.04-Ansible)
+Ansible CIS Ubuntu 20.04 LTS Hardening Version V1.1.0 [![Build Status](https://travis-ci.com/alivx/CIS-Ubuntu-20.04-Ansible.svg?branch=master)](https://travis-ci.com/alivx/CIS-Ubuntu-20.04-Ansible)
 =========
 
 CIS hardened Ubuntu: cyber attack and malware prevention for mission-critical systems
@@ -89,7 +89,7 @@ Examples of config that should be immediately considered for exclusion:
 
 #Section 5
 #5.1.8 Ensure cron is restricted to authorized users
-allowed_hosts: "ALL: 0.0.0.0/0.0.0.0, 192.168.2.0/255.255.255.0"
+allowd_hosts: "ALL: 0.0.0.0/0.0.0.0, 192.168.2.0/255.255.255.0"
 # 5.2.17 Ensure SSH access is limited
 allowed_users: ali saleh baker root #Put None or list of users space between each user
 
@@ -138,7 +138,7 @@ ansible-playbook -i host run.yaml -t section2 -t 6.1.1
 * Note:
 When run an individual task be sure from the dependencies between tasks, for example, if you run tag **4.1.1.2 Ensure auditd service is enabled** before running **4.1.1.1 Ensure auditd is installed** you will get an error at the run time.
 
-* Points with ~~Tilde~~ not implemented yet, currently I'm working on it.
+* Points with ~~Tilda~~ not implemented yet, currently I'm working on it.
 * make sure to select one time service, for me I use ntp, but you can use other service such as [`systemd-timesyncd`,`ntp`,`chrony`] under the settings `defaults/main.yaml`
 > Testing
 > 11/1/2020 Tested on AWS EC2 ubuntu 20.04 LTS [Pass]
@@ -470,7 +470,7 @@ _________________
   connection: local
 ```
 * if you faced issue with execut, try to run the playbook in another path, like `/srv/`.
-* For error like this `stderr: chage: user 'ubuntu' does not exist in /etc/passwd`, make sure to update config under `CIS-Ubuntu-20.04-Ansible/defaults/main.yml`
+* For error like this `stderr: chage: user 'ubuntu' does not exist in /etc/passed`, make sure to update config under `CIS-Ubuntu-20.04-Ansible/defaults/main.yml`
 
 
 ```Bash
@@ -482,15 +482,6 @@ TASK [CIS-Ubuntu-20.04-Ansible : 1.4.1 Ensure AIDE is installed] ***************
 TASK [CIS-Ubuntu-20.04-Ansible : 5.4.1.1 Ensure password expiration is 365 days or less | chage] ***************************************************************************************************************************************************************************failed: [192.168.80.129] (item=ubuntu) => {"ansible_loop_var": "item", "changed": true, "cmd": ["chage", "--maxdays", "300", "ubuntu"], "delta": "0:00:00.005478", "end": "2021-01-21 12:49:45.463615", "item": "ubuntu", "msg": "non-zero return code", "rc": 1, "start": "2021-01-21 12:49:45.458137", "stderr": "chage: user 'ubuntu' does not exist in /etc/passwd", "stderr_lines": ["chage: user 'ubuntu' does not exist in /etc/passwd"], "stdout": "", "stdout_lines": []}
 ```
 * Make sure you set the right user under defaults/main.yaml
-
-
-```
-
-TASK [CIS-Ubuntu-20.04-Ansible : Creating users without admin access] ***************************************************************************************************************
-fatal: [golden]: FAILED! => {"msg": "crypt.crypt not supported on Mac OS X/Darwin, install passlib python module"}
-```
-
-Install `pip install passlib`
 
 _________________
 
@@ -506,3 +497,4 @@ Author Information
 The role was originally developed by [Ali Saleh Baker](https://www.linkedin.com/in/alivx/).
 
 When contributing to this repository, please first discuss the change you wish to make via a GitHub issue,  email, or via other channels with me :)
+
