@@ -18,7 +18,7 @@ set_bootloader_credentials: no
 ### Update the default bootloader user and password
 bootloader_credentials: { user: "root", password: "b00tl04derPwd" }
 # 1.4.3 Ensure authentication required for single user mode
-set_root_password: yes
+set_root_password: no
 root_password: r00tP4ssw0rd
 ## 1.7.1 Ensure permissions on /etc/motd are configured: allow for custom motd template (if the file doesn't exist, the
 ## default template in files/templates/motd.j2 will be used)
@@ -74,14 +74,14 @@ remove_AvahiServer: yes
 remove_CUPS: yes
 remove_DHCPServer: yes
 remove_LDAPserver: yes
-remove_NFS: no
+remove_NFS: yes
 remove_DNSServer: yes
 remove_FTPServer: yes
 remove_IMAPandPOP3server: yes
 remove_Samba: yes
 remove_HTTPProxyServer: yes
 HTTPProxyServer: squid
-remove_SNMPServer: yes
+remove_SNMPServer: no
 remove_rsyncservice: yes
 remove_NISServer: yes
 remove_NISClient: yes
@@ -94,12 +94,14 @@ remove_RPC: yes
 
 # Section 3 Settings
 disable_wifi: no
-IPv6_is_enabled: no
+IPv6_is_enabled: yes
 enable_firewall: yes
 UFWEnable: yes # Running both ufw and the services included in the iptables-persistent package may lead to conflict
 ## 3.5.1.6 Ensure firewall rules exist for all open ports | defined ports
 firewall_list_of_ports_to_allow:
-  - { rule: "allow", port: "8080", proto: "tcp" }
+  - { rule: "allow", port: "162", proto: "udp" }
+  - { rule: "allow", port: "514", proto: "udp" }
+  - { rule: "allow", port: "2055", proto: "udp" }
 ## 3.5.1.6 Ensure firewall rules exist for all open ports | keep_alived
 firewall_allow_keep_alive: no
 
@@ -124,14 +126,14 @@ grub_backlog_limit: 8192
 
 # Section 5 settings
 ## 5.1.8 Ensure cron is restricted to authorized users
-allowd_hosts: "ALL: 0.0.0.0/0.0.0.0, 192.168.2.0/255.255.255.0"
+allowd_hosts: "ALL: 0.0.0.0/0.0.0.0, 10.24.1.0/255.255.255.0"
 ## 5.2.13 Ensure only strong MAC algorithms are used
 ssh_MACs: "hmac-sha2-512-etm@openssh.com,hmac-sha2-256-etm@openssh.com,hmac-sha2-512,hmac-sha2-256"
 ## 5.2.14 Ensure only strong Key Exchange algorithms are used
 ssh_key_algorithms: "curve25519-sha256,curve25519-sha256@libssh.org,diffie-hellman-group14-sha256,diffie-hellman-group16-sha512,diffie-hellman-group18-sha512,ecdh-sha2-nistp521,ecdh-sha2-nistp384,ecdh-sha2-nistp256,diffie-hellman-group-exchange-sha256"
 ssh_ciphers: chacha20-poly1305@openssh.com,aes256-gcm@openssh.com,aes128-gcm@openssh.com,aes256-ctr,aes192-ctr,aes128-ctr
 ## 5.2.17 Ensure SSH access is limited
-allowed_users: ubuntu root #Put None or list of users space between each user
+allowed_users: ubuntu ssm-user root #Put None or list of users space between each user
 allowed_groups: None
 deny_users: None
 deny_groups: None
@@ -147,8 +149,7 @@ pass_expire_in_days: 300
 pass_warn_age: 7
 pass_min_days: 1
 ## 5.4.1.1 Ensure password expiration is 365 days or less
-list_of_os_users:
-  - ubuntu
+list_of_os_users: []
 ## 5.4.1.4 Ensure inactive password lock is 30 days or less
 ##Note: A value of -1 would disable this setting
 account_inactive: 30
@@ -161,6 +162,8 @@ fix_command_not_found: false # Adds a change to /etc/apt/apt.conf.d/50command-no
 # Section 5 PAM config
 usersAllowedToSuAccess:
   - root
+  - ubuntu
+  - ssm-user
 adminGroup: root
 # Section 6
 
